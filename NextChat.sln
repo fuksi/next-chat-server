@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "NextChat", "NextChat\NextChat.sfproj", "{B62FD30F-E06F-461E-8099-2BE2E48801F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextChat.UserActor", "NextChat.UserActor\NextChat.UserActor.csproj", "{96240C75-F9A2-4F62-98B7-41A3794DD89B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextChat.UserActor", "NextChat.UserActor\NextChat.UserActor.csproj", "{96240C75-F9A2-4F62-98B7-41A3794DD89B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextChat.UserActor.Interfaces", "NextChat.UserActor.Interfaces\NextChat.UserActor.Interfaces.csproj", "{58200C25-69E1-4FF2-AF5B-A05515697E77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextChat.UserActor.Interfaces", "NextChat.UserActor.Interfaces\NextChat.UserActor.Interfaces.csproj", "{58200C25-69E1-4FF2-AF5B-A05515697E77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextChat.ChatApi", "NextChat.ChatApi\NextChat.ChatApi.csproj", "{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{58200C25-69E1-4FF2-AF5B-A05515697E77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58200C25-69E1-4FF2-AF5B-A05515697E77}.Release|x64.ActiveCfg = Release|Any CPU
 		{58200C25-69E1-4FF2-AF5B-A05515697E77}.Release|x64.Build.0 = Release|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Debug|x64.Build.0 = Debug|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Release|x64.ActiveCfg = Release|Any CPU
+		{28A8B8D4-DF57-4541-ACB5-509262E6A4DD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
