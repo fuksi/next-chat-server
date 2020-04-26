@@ -11,6 +11,7 @@ using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Data;
+using Serilog;
 
 namespace NextChat.ChatApi
 {
@@ -45,6 +46,7 @@ namespace NextChat.ChatApi
                                     .UseStartup<Startup>()
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url)
+                                    .UseSerilog()
                                     .Build();
                     }))
             };

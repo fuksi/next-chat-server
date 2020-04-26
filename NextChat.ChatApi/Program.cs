@@ -1,4 +1,6 @@
 using Microsoft.ServiceFabric.Services.Runtime;
+using Serilog;
+using Serilog.Events;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -13,6 +15,16 @@ namespace NextChat.ChatApi
         /// </summary>
         private static void Main()
         {
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+#if DEBUG
+            .WriteTo.File(@"C:\LogFiles\log.txt", rollingInterval: RollingInterval.Day)
+#endif
+            .WriteTo.Console()
+            .CreateLogger();
+
             try
             {
                 // The ServiceManifest.XML file defines one or more service type names.
