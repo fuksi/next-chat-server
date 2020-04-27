@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NextChat.ChatApi.Hubs;
+using NextChat.ChatApi.Services;
 using Serilog;
 
 namespace NextChat.ChatApi
@@ -17,6 +18,17 @@ namespace NextChat.ChatApi
         private const string ChatApiAudience = "https://api.nextchat.com";
         private const string WssApiPath = "/chatHub";
         private const string AllowAllCorsPolicy = "allowall";
+
+        public Startup(IHostEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
+        }
 
         public Startup(IConfiguration configuration)
         {
@@ -69,6 +81,9 @@ namespace NextChat.ChatApi
                             .AllowAnyMethod();
                     })
             );
+
+
+            services.AddSingleton<IWssMessageHandler, WssMessageHandler>();
 
             services.AddSignalR();
         }
