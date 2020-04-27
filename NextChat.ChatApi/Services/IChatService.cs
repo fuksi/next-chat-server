@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NextChat.ChatApi.Services
 {
-    public interface IWssMessageHandler
+    public interface IChatService
     {
         Task<(IEnumerable<Group>, IEnumerable<Group>)> GetConnectionInitialStateAsync(string userId);
         Task<Group> GetGroupAsync(string groupId);

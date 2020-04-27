@@ -83,7 +83,7 @@ namespace NextChat.ChatApi
             );
 
 
-            services.AddSingleton<IWssMessageHandler, WssMessageHandler>();
+            services.AddSingleton<IChatService, ChatService>();
 
             services.AddSignalR();
         }
