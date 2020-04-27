@@ -35,6 +35,7 @@
     <ProjectReference Include="..\NextChat.ChatApi\NextChat.ChatApi.csproj">
       <ServiceLaunchUrl>http://{MachineName}:{ServicePort}/weatherforecast</ServiceLaunchUrl>
     </ProjectReference>
+    <ProjectReference Include="..\NextChat.GroupActor\NextChat.GroupActor.csproj" />
     <ProjectReference Include="..\NextChat.UserActor\NextChat.UserActor.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

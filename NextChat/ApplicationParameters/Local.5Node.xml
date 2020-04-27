@@ -4,5 +4,6 @@
     <Parameter Name="NextChat.ChatApi_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="NextChat.ChatApi_InstanceCount" Value="1" />
     <Parameter Name="UserActorService_PartitionCount" Value="1" />
+    <Parameter Name="GroupActorService_PartitionCount" Value="1" />
   </Parameters>
 </Application>

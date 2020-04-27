@@ -6,10 +6,16 @@
     <Parameter Name="UserActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="UserActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="UserActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="GroupActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="GroupActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="GroupActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="NextChat.GroupActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="NextChat.ChatApiPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
@@ -34,6 +40,11 @@
     <Service Name="UserActorService" GeneratedIdRef="7aa47b7d-9915-4337-bfdd-e6a87b0bd2b9|Persisted">
       <StatefulService ServiceTypeName="UserActorServiceType" TargetReplicaSetSize="[UserActorService_TargetReplicaSetSize]" MinReplicaSetSize="[UserActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[UserActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="GroupActorService" GeneratedIdRef="4650f5ec-7069-4559-acd7-710b66e20505|Persisted">
+      <StatefulService ServiceTypeName="GroupActorServiceType" TargetReplicaSetSize="[GroupActorService_TargetReplicaSetSize]" MinReplicaSetSize="[GroupActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[GroupActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>
