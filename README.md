@@ -1,7 +1,7 @@
 ## Next Chat - A chat service 
 
 - Demo available at: https://goofy-noyce-e110ea.netlify.app/
-- Demo user: next@gmail.com, password: jk12jl14, but you can also create new user with any valid but not necessary real email
+- Demo user: next@gmail.com, password: jk12jl14#, but you can also create new user with any valid but not necessary real email
 - [Demo client repository](https://github.com/fuksi/next-chat-client)
 
 ## Description
