@@ -15,6 +15,7 @@ namespace NextChat.GroupActor.Interfaces
         Task RemoveMemberAsync(string userId);
         Task SetGroupNameAsync(string name);
         Task<string> GetGroupNameAsync();
+        Task<bool> IsFullAsync();
         Task<List<GroupMessage>> GetMessagesAsync();
         Task AddMessageAsync(GroupMessage message);
     }

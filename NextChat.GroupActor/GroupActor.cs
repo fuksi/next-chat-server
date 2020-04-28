@@ -44,6 +44,12 @@ namespace NextChat.GroupActor
             return activateTask;
         }
 
+        public async Task<bool> IsFullAsync()
+        {
+            var groupUsers = await StateManager.GetStateAsync<HashSet<string>>(GroupUsersKey);
+            return groupUsers.Count >= GroupCapacity;
+        }
+
         public async Task<bool> AddMemberAsync(string userId)
         {
             var groupUsers = await StateManager.GetStateAsync<HashSet<string>>(GroupUsersKey);

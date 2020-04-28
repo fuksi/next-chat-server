@@ -39,13 +39,15 @@ namespace NextChat.ChatApi.Services
             var messages = await group.GetMessagesAsync();
             var users = await group.GetMembersAsync();
             var name = await group.GetGroupNameAsync();
+            var isFull = await group.IsFullAsync();
 
             return new Group 
             { 
                 Id = groupId,
                 Messages = messages,
                 Users = users,
-                Name = name
+                Name = name,
+                IsFull = isFull
             };
         }
 
@@ -142,10 +144,12 @@ namespace NextChat.ChatApi.Services
                         var groupId = actorInfo.ActorId.ToString();
                         var actor = GetGroupActor(groupId);
                         var groupName = await actor.GetGroupNameAsync();
+                        var isFull = await actor.IsFullAsync();
                         allGroups.Add(new Group
                         {
                             Id = groupId,
-                            Name = groupName
+                            Name = groupName,
+                            IsFull = isFull
                         });
 
                     }
@@ -161,6 +165,7 @@ namespace NextChat.ChatApi.Services
         /// <summary>
         /// Retrieve all groups. Divide into groups user belong to and the others.
         /// User's groups payload will include all data including members list
+        /// Where other groups payload will only show if group is full
         /// </summary>
         public async Task<(IEnumerable<Group>, IEnumerable<Group>)> GetConnectionInitialStateAsync(string userId)
         {
@@ -168,22 +173,11 @@ namespace NextChat.ChatApi.Services
             var userActor = GetUserActor(userId);
             var userGroupIds = await userActor.GetGroupIdsAsync();
 
-            var userGroupsEnriched = userGroupIds.Select(id =>
-            {
-                var groupActor = GetGroupActor(id);
-                var messages = groupActor.GetMessagesAsync().Result;
-                var members = groupActor.GetMembersAsync().Result;
-                var name = groupActor.GetGroupNameAsync().Result;
-                return new Group
-                {
-                    Id = id,
-                    Name = name,
-                    Messages = messages,
-                    Users = members,
-                };
-            });
+            var userGroupsEnriched = await Task.WhenAll(
+                userGroupIds.Select(async id => await GetGroupAsync(id)));
 
             var otherGroups = allGroups.Where(g => !userGroupIds.Contains(g.Id));
+
             return (userGroupsEnriched, otherGroups);
         }
 

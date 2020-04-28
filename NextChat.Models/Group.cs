@@ -8,5 +8,6 @@ namespace NextChat.Models
         public string Name { get; set; }
         public List<GroupMessage> Messages { get; set; }
         public HashSet<string> Users { get; set; }
+        public bool IsFull { get; set; }
     }
 }
