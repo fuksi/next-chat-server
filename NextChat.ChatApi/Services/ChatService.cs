@@ -24,15 +24,10 @@ namespace NextChat.ChatApi.Services
         /// <summary>
         /// Add message to group
         /// </summary>
-        public async Task AddMessageAsync(string userId, UserWssPayload payload)
+        public async Task AddMessageAsync(GroupMessage message, string groupId)
         {
-            var group = GetGroupActor(payload.GroupId);
-            await group.AddMessageAsync(new GroupMessage
-            {
-                Content = payload.NewMessage,
-                UserId = userId,
-                CreatedAt = DateTime.UtcNow
-            });
+            var group = GetGroupActor(groupId);
+            await group.AddMessageAsync(message);
         }
 
         /// <summary>

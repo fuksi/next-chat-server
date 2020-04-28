@@ -15,7 +15,7 @@ namespace NextChat.GroupActor
         private const string GroupMessagesKey = "messages";
         private const string GroupNameKey = "name";
         private const string GroupUsersKey = "users";
-        private const int GroupCapacity = 20;
+        private const int GroupCapacity = 2;
 
         public GroupActor(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)

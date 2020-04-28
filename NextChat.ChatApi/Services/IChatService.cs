@@ -12,6 +12,6 @@ namespace NextChat.ChatApi.Services
         Task<(bool, string)> NewGroupAsync(string userId, string groupName);
         Task<bool> JoinGroupAsync(string userId, string groupId);
         Task LeaveGroupAsync(string userId, string groupId);
-        Task AddMessageAsync(string userId, UserWssPayload payload);
+        Task AddMessageAsync(GroupMessage message, string groupId);
     }
 }

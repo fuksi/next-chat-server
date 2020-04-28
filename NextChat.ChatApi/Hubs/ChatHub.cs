@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.SignalR;
 using NextChat.ChatApi.Models;
 using NextChat.ChatApi.Services;
+using NextChat.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +24,7 @@ namespace NextChat.ChatApi.Hubs
         private const string JoinResultMessage = "JoinResult";
         private const string LeaveSuccessMessage = "LeaveSuccess";
 
+        private const string UserEmailClaimType = "https://nextchat.me/email";
         private readonly IChatService _chatService;
 
         public ChatHub(IChatService chatService)
@@ -166,8 +169,14 @@ namespace NextChat.ChatApi.Hubs
         /// </summary>
         public async Task NewMessage(UserWssPayload payload)
         {
-            var userId = Context.UserIdentifier;
-            await _chatService.AddMessageAsync(userId, payload);
+            var newMessage = new GroupMessage
+            {
+                UserId = Context.UserIdentifier,
+                Email = GetUserEmail(),
+                CreatedAt = DateTime.UtcNow,
+                Content = payload.NewMessage
+            };
+            await _chatService.AddMessageAsync(newMessage, payload.GroupId);
 
             var updatedGroup = await _chatService.GetGroupAsync(payload.GroupId);
             var affectedClients = Clients.Users(updatedGroup.Users.ToList());
@@ -178,6 +187,11 @@ namespace NextChat.ChatApi.Hubs
             };
 
             await affectedClients.SendAsync(NewMessageMessage, res);
+        }
+
+        private string GetUserEmail()
+        {
+            return Context.User.Claims.Single(c => c.Type == UserEmailClaimType).Value;
         }
     }
 }
