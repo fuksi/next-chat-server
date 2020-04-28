@@ -1,6 +1,4 @@
-﻿using NextChat.Models;
-
-namespace NextChat.ChatApi.Models
+﻿namespace NextChat.ChatApi.Models
 {
     public class UserWssPayload
     {

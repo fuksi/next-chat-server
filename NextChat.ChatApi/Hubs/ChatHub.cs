@@ -95,7 +95,7 @@ namespace NextChat.ChatApi.Hubs
         /// <summary>
         /// Request to join group.
         /// Join result is sent to the current connection.
-        /// If succeeded, said group's members are notified of the new member
+        /// If succeeded, notify all connection of relevant group propery change
         /// </summary>
         public async Task JoinGroup(UserWssPayload payload)
         {
@@ -124,22 +124,19 @@ namespace NextChat.ChatApi.Hubs
 
                 await Clients.Clients(Context.ConnectionId).SendAsync(JoinResultMessage, res);
 
-                // inform the group of the new user
-                var userList = updatedGroup.Users.ToList();
-                var affectedClients = Clients.Users(userList);
-                var newMememberRes = new NewMemberReponse
+                // inform all connection that group has changed
+                var memberChangeRes = new MemberChangeResponse
                 {
-                    UserId = userId,
-                    GroupId = groupId
+                    Group = updatedGroup
                 };
 
-                await affectedClients.SendAsync(NewMemberMessage, newMememberRes);
+                await Clients.All.SendAsync(NewMemberMessage, memberChangeRes);
             }
         }
 
         /// <summary>
         /// Leave group. Current connect is notified that leave action went through
-        /// Said group's members are notified of the members change
+        /// All connected clients are notified of group members change
         /// </summary>
         public async Task LeaveGroup(UserWssPayload payload)
         {
@@ -150,17 +147,14 @@ namespace NextChat.ChatApi.Hubs
             // inform current connection
             await Clients.Clients(Context.ConnectionId).SendAsync(LeaveSuccessMessage, groupId);
 
-            // inform in the group the user has left
+            // inform all that group members has changed
             var updatedGroup = await _chatService.GetGroupAsync(groupId);
-            var userList = updatedGroup.Users.ToList();
-            var affectedClients = Clients.Users(userList);
-            var memberLeftResponse = new MemberLeftReponse
+            var memberChangeRes = new MemberChangeResponse
             {
-                UserId = userId,
-                GroupId = groupId
+                Group = updatedGroup
             };
 
-            await affectedClients.SendAsync(MemberLeftMessage, memberLeftResponse);
+            await Clients.All.SendAsync(MemberLeftMessage, memberChangeRes);
         }
 
         /// <summary>
