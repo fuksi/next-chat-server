@@ -12,6 +12,8 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Data;
 using Serilog;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace NextChat.ChatApi
 {
@@ -38,7 +40,13 @@ namespace NextChat.ChatApi
                         ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
                         return new WebHostBuilder()
-                                    .UseKestrel()
+                                    .UseKestrel(opt => {
+                                        int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
+                                        opt.Listen(IPAddress.IPv6Any, port, listenOptions =>
+                                        {
+                                            listenOptions.UseHttps(FindMatchingCertificateBySubject("nextchat.me"));
+                                        });
+                                    })
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton<StatelessServiceContext>(serviceContext))
@@ -50,6 +58,31 @@ namespace NextChat.ChatApi
                                     .Build();
                     }))
             };
+        }
+
+        private X509Certificate2 FindMatchingCertificateBySubject(string subjectCommonName)
+        {
+            using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.OpenExistingOnly | OpenFlags.ReadOnly);
+            var certCollection = store.Certificates;
+            var matchingCerts = new X509Certificate2Collection();
+
+            foreach (var enumeratedCert in certCollection)
+            {
+                if (StringComparer.OrdinalIgnoreCase.Equals(subjectCommonName, enumeratedCert.GetNameInfo(X509NameType.SimpleName, forIssuer: false))
+                  && DateTime.Now < enumeratedCert.NotAfter
+                  && DateTime.Now >= enumeratedCert.NotBefore)
+                {
+                    matchingCerts.Add(enumeratedCert);
+                }
+            }
+
+            if (matchingCerts.Count == 0)
+            {
+                throw new Exception($"Could not find a match for a certificate with subject 'CN={subjectCommonName}'.");
+            }
+
+            return matchingCerts[0];
         }
     }
 }
