@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -72,13 +73,21 @@ namespace NextChat.ChatApi
             });
 
             services.AddControllers();
+
+            var allowedOrigins = Configuration.GetSection("AllowedOrigins")
+                .GetChildren()
+                .Select(c => c.Value).ToList();
+#if DEBUG
+            allowedOrigins.Add("http://localhost:3000");
+#endif
             services.AddCors(
                 options => options.AddPolicy(AllowAllCorsPolicy, builder =>
                     {
                         builder
-                            .AllowAnyOrigin()
+                            .WithOrigins(allowedOrigins.ToArray())
                             .AllowAnyHeader()
-                            .AllowAnyMethod();
+                            .AllowAnyMethod()
+                            .AllowCredentials();
                     })
             );
 
@@ -100,11 +109,12 @@ namespace NextChat.ChatApi
 
             app.UseRouting();
 
+            app.UseCors(AllowAllCorsPolicy);
+
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors(AllowAllCorsPolicy);
 
             app.UseEndpoints(endpoints =>
             {
