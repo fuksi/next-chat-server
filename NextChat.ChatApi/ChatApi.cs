@@ -32,21 +32,29 @@ namespace NextChat.ChatApi
         /// <returns>The collection of listeners.</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
+            var serviceEndPointName = "ServiceEndpoint";
+#if DEBUG
+            serviceEndPointName = "UnsecuredServiceEndpoint";
+#endif
             return new ServiceInstanceListener[]
             {
                 new ServiceInstanceListener(serviceContext =>
-                    new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
+                    new KestrelCommunicationListener(serviceContext, serviceEndPointName, (url, listener) =>
                     {
                         ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
                         return new WebHostBuilder()
+#if DEBUG
+                                    .UseKestrel()
+#else
                                     .UseKestrel(opt => {
-                                        int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
+                                        int port = serviceContext.CodePackageActivationContext.GetEndpoint(serviceEndPointName).Port;
                                         opt.Listen(IPAddress.IPv6Any, port, listenOptions =>
                                         {
                                             listenOptions.UseHttps(FindMatchingCertificateBySubject("nextchat.me"));
                                         });
                                     })
+#endif
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton<StatelessServiceContext>(serviceContext))
