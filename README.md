@@ -13,6 +13,10 @@ The application contains a Stateless API which is exposed externally via Https/W
 - .NET CORE SDK 3.1, VS 2019, Service Fabric SDK are required
 - The solution should run out of the box, using a local service fabric cluster
 
+## ChatApi Http/Https
+- In DEBUG configuration, ChatApi is exposed using http
+- In RELEASE configuration, https is used instead. Configuration is made using [this guideline](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-tutorial-dotnet-app-enable-https-endpoint). Notice that CN for now is hard-coded in `ChatApi.cs` and `SetCertAccess.ps1`
+
 ## CI/CD
 - CI/CD was done with Azure DevOps
 - Pipeline template is available at `azure-pipelines.yml`. Remember to prepare variables used in the template
