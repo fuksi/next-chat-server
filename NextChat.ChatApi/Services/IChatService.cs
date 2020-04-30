@@ -7,7 +7,7 @@ namespace NextChat.ChatApi.Services
 {
     public interface IChatService
     {
-        Task<(IEnumerable<Group>, IEnumerable<Group>)> GetConnectionInitialStateAsync(string userId);
+        Task<InitialStateResponse> GetConnectionInitialStateAsync(string userId);
         Task<Group> GetGroupAsync(string groupId);
         Task<(bool, string)> NewGroupAsync(string userId, string groupName);
         Task<bool> JoinGroupAsync(string userId, string groupId);

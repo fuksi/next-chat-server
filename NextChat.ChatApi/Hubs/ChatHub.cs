@@ -39,14 +39,9 @@ namespace NextChat.ChatApi.Hubs
         public async Task InitializeState(UserWssPayload _)
         {
             var userId = Context.UserIdentifier;
-            var (userGroups, otherGroups) = await _chatService.GetConnectionInitialStateAsync(userId);
-            var res = new InitialStateResponse
-            {
-                UserGroups = userGroups,
-                OtherGroups = otherGroups
-            };
+            var res = await _chatService.GetConnectionInitialStateAsync(userId);
 
-            await Clients.Clients(Context.ConnectionId).SendAsync(InitialStateMessage, res);
+            await Clients.Client(Context.ConnectionId).SendAsync(InitialStateMessage, res);
         }
 
 
@@ -68,7 +63,7 @@ namespace NextChat.ChatApi.Hubs
                     Success = false,
                     ErrorMessage = $"Failed to create group. Group name '{groupName}' already exists!"
                 };
-                await Clients.Clients(Context.ConnectionId).SendAsync(NewGroupResultMessage, res);
+                await Clients.Client(Context.ConnectionId).SendAsync(NewGroupResultMessage, res);
             }
             else
             {
@@ -80,7 +75,7 @@ namespace NextChat.ChatApi.Hubs
                     Success = true
                 };
 
-                await Clients.Clients(Context.ConnectionId).SendAsync(NewGroupResultMessage, res);
+                await Clients.Client(Context.ConnectionId).SendAsync(NewGroupResultMessage, res);
 
                 // inform all the users of the new group
                 var newGroupRes = new NewGroupResponse
@@ -110,7 +105,7 @@ namespace NextChat.ChatApi.Hubs
                     Success = false,
                     ErrorMessage = "Group is full, can't join!"
                 };
-                await Clients.Clients(Context.ConnectionId).SendAsync(JoinResultMessage, res);
+                await Clients.Client(Context.ConnectionId).SendAsync(JoinResultMessage, res);
             }
             else
             {
@@ -122,7 +117,7 @@ namespace NextChat.ChatApi.Hubs
                     Success = true
                 };
 
-                await Clients.Clients(Context.ConnectionId).SendAsync(JoinResultMessage, res);
+                await Clients.Client(Context.ConnectionId).SendAsync(JoinResultMessage, res);
 
                 // inform all connection that group has changed
                 var memberChangeRes = new MemberChangeResponse
@@ -145,7 +140,7 @@ namespace NextChat.ChatApi.Hubs
             await _chatService.LeaveGroupAsync(userId, groupId);
 
             // inform current connection
-            await Clients.Clients(Context.ConnectionId).SendAsync(LeaveSuccessMessage, groupId);
+            await Clients.Client(Context.ConnectionId).SendAsync(LeaveSuccessMessage, groupId);
 
             // inform all that group members has changed
             var updatedGroup = await _chatService.GetGroupAsync(groupId);

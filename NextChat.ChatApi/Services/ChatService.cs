@@ -167,7 +167,7 @@ namespace NextChat.ChatApi.Services
         /// User's groups payload will include all data including members list
         /// Where other groups payload will only show if group is full
         /// </summary>
-        public async Task<(IEnumerable<Group>, IEnumerable<Group>)> GetConnectionInitialStateAsync(string userId)
+        public async Task<InitialStateResponse> GetConnectionInitialStateAsync(string userId)
         {
             var allGroups = await GetAllGroupsInformationAsync();
             var userActor = GetUserActor(userId);
@@ -178,7 +178,11 @@ namespace NextChat.ChatApi.Services
 
             var otherGroups = allGroups.Where(g => !userGroupIds.Contains(g.Id));
 
-            return (userGroupsEnriched, otherGroups);
+            return new InitialStateResponse
+            {
+                UserGroups = userGroupsEnriched,
+                OtherGroups = otherGroups
+            };
         }
 
         private IUserActor GetUserActor(string userId)
