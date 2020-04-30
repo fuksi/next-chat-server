@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextChat.ChatApi", "NextCha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextChat.Models", "NextChat.Models\NextChat.Models.csproj", "{99ED2DFE-EFAC-40D1-A1B4-FC27A8BCDA61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextChat.GroupActor", "NextChat.GroupActor\NextChat.GroupActor.csproj", "{A3296124-2CE0-4C1E-B564-C72A19F58FE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextChat.GroupActor", "NextChat.GroupActor\NextChat.GroupActor.csproj", "{A3296124-2CE0-4C1E-B564-C72A19F58FE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextChat.GroupActor.Interfaces", "NextChat.GroupActor.Interfaces\NextChat.GroupActor.Interfaces.csproj", "{8E9AD264-CD89-400E-9B05-DAB0DC0CF28D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextChat.GroupActor.Interfaces", "NextChat.GroupActor.Interfaces\NextChat.GroupActor.Interfaces.csproj", "{8E9AD264-CD89-400E-9B05-DAB0DC0CF28D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextChat.ChatApi.Tests.Unit", "NextChat.ChatApi.Tests.Unit\NextChat.ChatApi.Tests.Unit.csproj", "{109DEA73-1217-41BB-9FD4-E76B51AFC41B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,14 @@ Global
 		{8E9AD264-CD89-400E-9B05-DAB0DC0CF28D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E9AD264-CD89-400E-9B05-DAB0DC0CF28D}.Release|x64.ActiveCfg = Release|Any CPU
 		{8E9AD264-CD89-400E-9B05-DAB0DC0CF28D}.Release|x64.Build.0 = Release|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Debug|x64.Build.0 = Debug|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Release|x64.ActiveCfg = Release|Any CPU
+		{109DEA73-1217-41BB-9FD4-E76B51AFC41B}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

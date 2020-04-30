@@ -13,18 +13,19 @@ namespace NextChat.ChatApi.Hubs
     public class ChatHub : Hub
     {
         // Multiple clients broadcast target
-        private const string NewGroupMessage = "NewGroup";
-        private const string NewMemberMessage = "NewMember";
-        private const string MemberLeftMessage = "MemberLeft";
-        private const string NewMessageMessage = "NewMessage";
+        public static readonly string NewGroupMessage = "NewGroup";
+        public static readonly string NewMemberMessage = "NewMember";
+        public static readonly string MemberLeftMessage = "MemberLeft";
+        public static readonly string NewMessageMessage = "NewMessage";
 
         // Single client broadcast target
-        private const string InitialStateMessage = "InitialState";
-        private const string NewGroupResultMessage = "NewGroupResult";
-        private const string JoinResultMessage = "JoinResult";
-        private const string LeaveSuccessMessage = "LeaveSuccess";
+        public static readonly string InitialStateMessage = "InitialState";
+        public static readonly string NewGroupResultMessage = "NewGroupResult";
+        public static readonly string JoinResultMessage = "JoinResult";
+        public static readonly string LeaveSuccessMessage = "LeaveSuccess";
 
-        private const string UserEmailClaimType = "https://nextchat.me/email";
+        public static readonly string UserEmailClaimType = "https://nextchat.me/email";
+
         private readonly IChatService _chatService;
 
         public ChatHub(IChatService chatService)
