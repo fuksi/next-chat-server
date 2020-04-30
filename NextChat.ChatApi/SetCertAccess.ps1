@@ -9,11 +9,11 @@ if ($cert -eq $null)
 {
     $message="Certificate with subject:"+$subject+" does not exist at Cert:\LocalMachine\My\"
     Write-Host $message -ForegroundColor Red
-    exit 1;
+    return $false;
 }elseif($cert.HasPrivateKey -eq $false){
     $message="Certificate with subject:"+$subject+" does not have a private key"
     Write-Host $message -ForegroundColor Red
-    exit 1;
+    return $false;
 }else
 {
     $keyName=$cert.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName
